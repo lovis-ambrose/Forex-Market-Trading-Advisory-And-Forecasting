@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;700&display=swap');
+@import url('http://fonts.cdnfonts.com/css/apple-chancery');
+@import url('http://fonts.cdnfonts.com/css/witcher-handwriting');
+
+@media (prefers-reduced-motion: no-preference) {
+     :root {
+        scroll-behavior: smooth;
+    }
+}
+
+.parallax {
+background-image: url("../img/forex10.jpg");
+width: 100%;
+position:relative;
+background: rgb(0,0,0)!important;
+background: radial-gradient(circle, rgba(0,0,0,0.4) 22%, rgba(0,0,0,0.3) 49%, rgba(0,212,255,0) 100%)!important;
+height:70vh;
+
+}
+
+.parallax1 {
+background-image: url("../img/forex10.jpg");
+width: 100%;
+min-height: 60vh;
+background-attachment: fixed;
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+
+}
+
+.navbar-fixed-top.scrolled {
+   background-color: ghostwhite;
+  transition: background-color 200ms linear;
+}
+
+#navbar-brand{
+    color: red;
+    font-family: 'Witcher Handwriting', sans-serif;
+}
+
+#login-head{
+    font-family: "Source Sans", sans-serif;
+}
+
+.carousel-inner{
+  overflow:visible;
+}
+
+
+.parallax{
+
+}
+
+.parallax:before{
+        content:"";
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-image:url("../img/forex9.jpg");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        filter: drop-shadow(0px 5px 6px orange);
+        z-index:-1;
+    }
+
+#header{
+  font-family: 'Witcher Handwriting', sans-serif;
+}
+
+ul li a p{
+  color:#dcdcdc;
+}
+
+.parag{
+  cursor: pointer;
+  font-family: 'Lato', sans-serif;
+  font-weight: 800;
+}
+
+#icons{
+  border-radius: 0px;
+}
+
+
+.jumbotron{
+  border-radius: 0;
+  padding: 3rem 0 2rem;
+}
+
+h3.heading{
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding-bottom: 1rem;
+  font-family: 'Witcher Handwriting', sans-serif;
+
+}
+/*----------------------Portfolio-----------------*/
+
+/*------------Portfolio----------------------------*/
+
+/*......Welcome Index Page........*/
+#index_body{
+  height: 100%;
+  width: 100%;
+  font-family: 'Witcher Handwriting', sans-serif;
+
+  color: #505962;
+  color: #212529;
+  background-color: #fffff0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+#navbar_index{
+  text-transform:uppercase;
+  font-weight: 700;
+  font-size: .7rem;
+  letter-spacing: .1rem;
+  background: orange;
+  font-family: 'Witcher Handwriting', sans-serif;
+}
+
+/*-----dashboard2-----------------*/
+   #navbar-index{
+     font-weight: 700;
+     font-size: .9rem;
+     margin-bottom: 0;
+   }
+
+#navbar-brand-dash{
+  margin-right: 10%;
+  height:2.5rem;
+  font-family: 'Witcher Handwriting', sans-serif;
+}
+
+/*-----dashboard2-----------------*/
+
+#navbar-brand-index img{
+  margin-right: 10%;
+  height:2.5rem;
+}
+/*navbar brand image dashboard 2*/
+#navbar-brand-index1 img{
+  margin-right: 10%;
+  height:1.9rem;
+}
+/*navbar brand image dashboard 2*/
+
+
+#image{
+  height:2.5rem;
+}
+#navbar-nav li{
+  padding-right: .7rem;
+  font-family: 'Witcher Handwriting', sans-serif;
+}
+
+
+.navbar-dark .navbar-nav .nav-link{
+  color: white;
+  padding-top: .8rem;
+}
+
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link:hover{
+  color: cyan/*#1ebba3*/;
+}
+.collapse .nav-link{
+  font-weight: bold;
+}
+/*.......welcome index page........*/
+
+/*.............Slider............*/
+
+
+
+@media screen and (max-width: 450px) {
+
+  .parallax {
+    /* The image used */
+    background-image: url("../img/IMG_0028.jpeg");
+    width: 100%;
+
+    /* Set a specific height */
+    min-height: 30vh;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 1;
+
+    }
+}
+
+@media screen and (max-width: 390px) {
+
+  .parallax {
+    /* The image used */
+    background-image: url("../img/IMG_0028.jpeg");
+    width: 100%;
+
+    /* Set a specific height */
+    min-height: 30vh;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 1;
+
+    }
+
+}
+
+
+@media screen and (max-width: 950px) {
+
+  .parallax {
+    /* The image used */
+    background-image: url("../img/IMG_0028.jpeg");
+    width: 100%;
+
+    /* Set a specific height */
+    min-height: 30vh;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 1;
+
+    }
+}
+/*-------------Slider------------------*/
+
+/*--------------driver repair------------*/
+.error
+{
+  color: red;
+  size: 80%
+}
+.hidden
+{
+  display:none
+}
+/*-----------driver repair---------*/
+
+/*---officer-----*/
+input[type="text"], textarea {
+    outline: none;
+    box-shadow:none !important;
+}

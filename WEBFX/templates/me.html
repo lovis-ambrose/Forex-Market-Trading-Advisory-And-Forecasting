@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Muhire-FX 4H Forecasts</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- overlayScrollbars -->
+        <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <!-- icheck bootstrap -->
+        <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="dist/css/adminlte.min.css">
+        <!-- Google Font: Source Sans Pro -->
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+        <!--Data tables css-->
+        <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+        <!--load swal js -->
+        <script src="dist/js/swal.js"></script>
+        <!-- Data Tables CSS -->
+        <link rel="stylesheet" type="text/css" href="plugins/datatable/custom_dt_html5.css">
+
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px;
+        border: 1px solid black;
+      }
+      th {
+        background-color: #ddd;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+    
+
+    .green {
+      color: green;
+    }
+
+    .red {
+      color: red;
+    }
+
+    .white {
+      color: white;
+    }
+      h1 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>FMTAF</h1>
+    <table id="forecasts" class="datatable1 table table-striped">
+      <thead>
+        <tr>
+          <th>Pair</th>
+          <th>Previous_4H GMT</th>
+          <th>Previous_Close</th>
+          <th>Predicted_Close</th>
+          <th>Expected_Pips</th>
+          <th>Current_Trend</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+
+    <script>
+      const tableBody = document.querySelector('#table-body');
+
+      function updateTable(data) {
+    // Loop through the existing rows and update the data
+    for (let i = 0; i < tableBody.rows.length; i++) {
+      const pairData = data[i];
+      const row = tableBody.rows[i];
+
+      row.cells[0].textContent = pairData.pair;
+      row.cells[1].textContent = pairData.previous_time;
+      row.cells[2].textContent = pairData.previous_close;
+      row.cells[3].textContent = pairData.predicted_value;
+      row.cells[4].textContent = pairData.pips;
+      row.cells[5].textContent = pairData.trend;
+
+      // Apply styling based on values
+      if (pairData.pips < 0) {
+        row.cells[4].className = 'red';
+        row.cells[3].className = 'red';
+        row.cells[0].className = 'red';
+      } else if (pairData.pips > 0) {
+        row.cells[4].className = 'green';
+        row.cells[3].className = 'green';
+        row.cells[0].className = 'green';
+      } else {
+        row.cells[4].className = 'white';
+        row.cells[3].className = 'white';
+        row.cells[0].className = 'white';
+      }
+
+      if (pairData.trend === 'uptrend') {
+        row.cells[5].className = 'green';
+      } else if (pairData.trend === 'downtrend') {
+        row.cells[5].className = 'red';
+      } else {
+        row.cells[5].className = 'white';
+      }
+    }
+  }
+
+      function addNewRows(data) {
+        // Loop through the new data and add new rows
+        data.forEach(pairData => {
+          const row = tableBody.insertRow();
+          row.innerHTML = `
+            <td>${pairData.pair}</td>
+            <td>${pairData.previous_time}</td>
+            <td>${pairData.previous_close}</td>
+            <td>${pairData.predicted_value}</td>
+            <td>${pairData.pips}</td>
+            <td>${pairData.trend}</td>
+          `;
+        });
+      }
+
+      function fetchData() {
+        fetch('http://localhost:4000/test')
+          .then((response) => {
+            console.log(response);
+            return response.json(); })
+          .then(data => {
+            console.log(data);
+            if (tableBody.rows.length === data.length) {
+              // Update the existing rows with the latest data
+              updateTable(data);
+            } else {
+              // Remove all existing rows and add new rows with the latest data
+              tableBody.innerHTML = '';
+              addNewRows(data);
+            }
+          })
+          .catch(error => console.error(error));
+      }
+
+      // Fetch the data initially when the page loads
+      fetchData();
+
+      // Fetch the data every 5.5 minutes
+      setInterval(fetchData, 4 * 60 * 1000);
+
+      // Fetch the data when the page is loaded and every 5.5 minutes after that
+      document.addEventListener('DOMContentLoaded', fetchData);
+    </script>
+  </body>
+  <footer>
+    <div style="text-align: center;">
+      <p>&copy; 2023 fmtaf.com. All rights reserved.</p>
+      <p>Disclaimer: FMTAF is not accountable for any trading losses incurred. Please combine our forecasts with other trading techniques and exercise caution when making investment decisions.</p>
+      
+    </div>
+  </footer>
+  <script src="plugins/jquery/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- DataTables -->
+        <script src="plugins/datatables/jquery.dataTables.js"></script>
+        <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+        <!-- overlayScrollbars -->
+        <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+        <!-- AdminLTE App -->
+        <script src="dist/js/adminlte.js"></script>
+
+        <!-- OPTIONAL SCRIPTS -->
+        <script src="dist/js/demo.js"></script>
+
+        <!-- PAGE PLUGINS -->
+        <!-- jQuery Mapael -->
+        <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+        <script src="plugins/raphael/raphael.min.js"></script>
+        <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+        <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+        <!-- ChartJS -->
+        <script src="plugins/chart.js/Chart.min.js"></script>
+
+        <!-- PAGE SCRIPTS -->
+        <script src="dist/js/pages/dashboard2.js"></script>
+
+        <!--Load Canvas JS -->
+        <script src="plugins/canvasjs.min.js"></script>
+        <script>
+          window.onload=function(){
+            $('.datatable1').DataTable();
+          }
+        </script>
+</html>

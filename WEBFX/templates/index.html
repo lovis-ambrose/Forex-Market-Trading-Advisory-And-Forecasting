@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>FMTAF 4H Forecasts</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th,
+    td {
+      text-align: left;
+      padding: 8px;
+      border: 1px solid black;
+    }
+    th {
+      background-color: #ddd;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .green {
+      color: green;
+    }
+
+    .red {
+      color: red;
+    }
+
+    .white {
+      color: white;
+    }
+    h1 {
+      text-align: center;
+    }
+    .zoomable-img {
+      max-width: 200px;
+      max-height: 200px;
+      cursor: pointer;
+    }
+  </style>
+  <script src="https://unpkg.com/zooming/build/zooming.min.js"></script>
+</head>
+<body>
+  <table id="forecasts">
+    <thead>
+      <tr>
+        <th>Pair</th>
+        <th>Previous_4H GMT</th>
+        <th>Previous_Close</th>
+        <th>Predicted_Close</th>
+        <th>Expected_Pips</th>
+        <th>Current_Trend</th>
+        <th>Chart_Trend</th>
+      </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+  </table>
+
+  <script>
+    const tableBody = document.querySelector('#table-body');
+
+    function updateTable(data) {
+      // Loop through the existing rows and update the data
+      for (let i = 0; i < tableBody.rows.length; i++) {
+        const pairData = data[i];
+        const row = tableBody.rows[i];
+
+        row.cells[0].textContent = pairData.pair;
+        row.cells[1].textContent = pairData.previous_time;
+        row.cells[2].textContent = pairData.previous_close;
+        row.cells[3].textContent = pairData.predicted_value;
+        row.cells[4].textContent = pairData.pips;
+        row.cells[5].textContent = pairData.trend;
+
+        // Remove existing classes
+        row.cells[4].classList.remove('red', 'green', 'white');
+        row.cells[3].classList.remove('red', 'green', 'white');
+        row.cells[5].classList.remove('red', 'green', 'white');
+
+        // Apply styling based on values
+        if (pairData.pips < 0) {
+          row.cells[4].classList.add('red');
+          row.cells[3].classList.add('red');
+        } else if (pairData.pips > 0) {
+          row.cells[4].classList.add('green');
+          row.cells[3].classList.add('green');
+        } else {
+          row.cells[4].classList.add('white');
+          row.cells[3].classList.add('white');
+        }
+
+        if (pairData.trend === 'uptrend') {
+          row.cells[0].classList.add('green');
+          row.cells[5].classList.add('green');
+        } else if (pairData.trend === 'downtrend') {
+          row.cells[0].classList.add('red');
+          row.cells[5].classList.add('red');
+        } else {
+          row.cells[0].classList.add('white');
+          row.cells[5].classList.add('white');
+        }
+
+        // Remove existing chart
+        row.cells[6].innerHTML = '';
+
+        // Create new chart element
+        const chartImg = document.createElement('img');
+        chartImg.src = 'data:image/png;base64,' + pairData.chart;
+        chartImg.alt = 'Chart';
+        chartImg.classList.add('zoomable-img'); // Add zoomable-img class
+
+        // Append chart element to the chart column
+        row.cells[6].appendChild(chartImg);
+      }
+
+      // Enable zooming functionality for all chart images
+      const zooming = new Zooming({
+        enableGrab: false, // Disable dragging the zoomed image
+        enableWheel: true // Enable zooming with the mouse wheel
+      });
+      zooming.listen('.zoomable-img');
+    }
+
+    function addNewRows(data) {
+      // Loop through the new data and add new rows
+      data.forEach(pairData => {
+        const row = tableBody.insertRow();
+        row.innerHTML = `
+          <td>${pairData.pair}</td>
+          <td>${pairData.previous_time}</td>
+          <td>${pairData.previous_close}</td>
+          <td>${pairData.predicted_value}</td>
+          <td>${pairData.pips}</td>
+          <td>${pairData.trend}</td>
+          <td><img src="data:image/png;base64,${pairData.chart}" alt="Chart" class="zoomable-img"></td>
+        `;
+      });
+
+      // Enable zooming functionality for all chart images
+      const zooming = new Zooming({
+        enableGrab: false, // Disable dragging the zoomed image
+        enableWheel: true // Enable zooming with the mouse wheel
+      });
+      zooming.listen('.zoomable-img');
+    }
+
+    function fetchData() {
+        fetch('http://localhost:4000/test')
+          .then((response) => {
+            console.log(response);
+            return response.json(); })
+          .then(data => {
+            console.log(data);
+            if (tableBody.rows.length === data.length) {
+              // Update the existing rows with the latest data
+              updateTable(data);
+            } else {
+              // Remove all existing rows and add new rows with the latest data
+              tableBody.innerHTML = '';
+              addNewRows(data);
+            }
+          })
+          .catch(error => console.error(error));
+      }
+
+    // Fetch the data initially when the page loads
+    fetchData();
+
+    // Fetch the data every 5.5 minutes
+    setInterval(fetchData, 4 * 60 * 1000);
+
+    // Fetch the data when the page is loaded and every 5.5 minutes after that
+    document.addEventListener('DOMContentLoaded', fetchData);
+  </script>
+</body>
+</html>

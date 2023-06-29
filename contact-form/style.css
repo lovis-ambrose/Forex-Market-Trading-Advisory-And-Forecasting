@@ -1,0 +1,18 @@
+.body {
+    padding: 20px;
+    font-size: 1.2rem;
+}
+
+#form-container {
+    display: block;
+    text-align: center;
+}
+
+#inner-form-container {
+    display: inline-block;
+    text-align: left;
+}
+
+#header {
+    font-size: 1.8rem;
+}

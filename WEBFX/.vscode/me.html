@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Muhire-FX 4H Forecasts</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px;
+        border: 1px solid black;
+      }
+      th {
+        background-color: #ddd;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      h1 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Muhire-FX 4H Forecasts</h1>
+    <table id="forecasts">
+      <thead>
+        <tr>
+          <th>Pair</th>
+          <th>Previous_4H GMT</th>
+          <th>previous_Close</th>
+          <th>Predicted_Close</th>
+          <th>Expected_Pips</th>
+          <th>Trend</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+
+    <script>
+      const tableBody = document.querySelector('#table-body');
+
+      function updateTable(data) {
+        // Loop through the existing rows and update the data
+        for (let i = 0; i < tableBody.rows.length; i++) {
+          const pairData = data[i];
+          const row = tableBody.rows[i];
+
+          row.cells[1].textContent = pairData.previous_time;
+          row.cells[2].textContent = pairData.previous_close;
+          row.cells[3].textContent = pairData.predicted_value;
+          row.cells[4].textContent = pairData.pips;
+          row.cells[5].textContent = pairData.trend;
+        }
+      }
+
+      function addNewRows(data) {
+        // Loop through the new data and add new rows
+        data.forEach(pairData => {
+          const row = tableBody.insertRow();
+          row.innerHTML = `
+            <td>${pairData.pair}</td>
+            <td>${pairData.previous_time}</td>
+            <td>${pairData.previous_close}</td>
+            <td>${pairData.predicted_value}</td>
+            <td>${pairData.pips}</td>
+            <td>${pairData.trend}</td>
+          `;
+        });
+      }
+
+      function fetchData() {
+        fetch('http://localhost:4000/muhirefx')
+          .then(response => response.json())
+          .then(data => {
+            if (tableBody.rows.length === data.length) {
+              // Update the existing rows with the latest data
+              updateTable(data);
+            } else {
+              // Remove all existing rows and add new rows with the latest data
+              tableBody.innerHTML = '';
+              addNewRows(data);
+            }
+          })
+          .catch(error => console.error(error));
+      }
+      console.log()
+      // Fetch the data initially when the page loads
+      //fetchData();
+
+      // Fetch the data every 5.5 minutes
+      setInterval(fetchData, 2.8 * 60 * 1000);
+
+      // Fetch the data when the page is loaded and every 5.5 minutes after that
+      document.addEventListener('DOMContentLoaded', fetchData);
+    </script>
+  </body>
+</html>
