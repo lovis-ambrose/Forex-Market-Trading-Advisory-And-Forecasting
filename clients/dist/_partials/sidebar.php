@@ -42,7 +42,8 @@
             <?php echo $profile_picture; ?>
           </div>
           <div class="info">
-            <a href="#" class="d-block"><?php echo $row->lname; ?></a>
+            <!-- link to page for editing profile -->
+            <a href="edit_profile.php" class="d-block"><?php echo $row->lname; ?></a>
           </div>
         </div>
 

@@ -14,16 +14,18 @@ if (isset($_POST['create_account'])) {
   $password = sha1(md5($_POST['password']));
   $c_password = sha1(md5($_POST['c_password']));
   $code = $_POST['code'];
+  
+  $profile_pic = $_FILES['profile_pic']['name'];
   // new variables
   $date = date("Y-m-d H:i:s");
   $expires = (time() + (60 * 1));
   
 
-  //$profile_pic  = $_FILES["profile_pic"]["name"];
-  //move_uploaded_file($_FILES["profile_pic"]["tmp_name"],"dist/img/".$_FILES["profile_pic"]["name"]);
+  $profile_pic  = $_FILES["profile_pic"]["name"];
+  move_uploaded_file($_FILES["profile_pic"]["tmp_name"],"dist/img/".$_FILES["profile_pic"]["name"]);
 
   //Insert Captured information to a database table
-  if(!empty($fname) && !empty($lname) && !empty($email) && !empty($gender) && !empty($password) && !empty($c_password) && !empty($date) && !empty($expires)){
+  if(!empty($fname) && !empty($lname) && !empty($email) && !empty($gender) && !empty($password) && !empty($c_password) && !empty($date) && !empty($expires) && !empty($profile_pic)){
     //bind paramaters
     if($password==$c_password){
       //Check wether user exists
@@ -35,10 +37,11 @@ if (isset($_POST['create_account'])) {
         $err="<div class='alert alert-danger'>Error!!!..Email already exists, Please select another email</div>";
       }else{
         //bind results of the form fields
-        $query = "INSERT INTO f_clients (fname, lname, email, gender, password, c_password, code, date, expires) VALUES (?,?,?,?,?,?,?,?,?)";
+        $query = "INSERT INTO f_clients (fname, lname, email, gender, password, c_password, code, date, expires, profile_pic) VALUES (?,?,?,?,?,?,?,?,?,?)";
         $stmt = $conn->prepare($query);
-        $rc = $stmt->bind_param('sssssssss', $fname, $lname, $email, $gender, $password, $c_password, $code, $date, $expires);
+        $rc = $stmt->bind_param('ssssssssss', $fname, $lname, $email, $gender, $password, $c_password, $code, $date, $expires, $new_file_name);
         $stmt->execute();
+
         //declare a varible which will be passed to alert function
       if ($stmt) {
         // This is where we shall redirect the user and send the login code.
@@ -57,6 +60,38 @@ if (isset($_POST['create_account'])) {
   }else{
     $err = "<div class='alert alert-danger'>Please fill all fields to continue</div>";
   }
+
+
+// Check if a file was selected
+if (!empty($_FILES['profile_pic']['name'])) {
+  $file_name = $_FILES['profile_pic']['name'];
+  $file_tmp = $_FILES['profile_pic']['tmp_name'];
+  $file_type = $_FILES['profile_pic']['type'];
+
+  // Check if the selected file is an image
+  $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
+  $file_extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+  if (!in_array($file_extension, $allowed_extensions)) {
+    $err = "<div class='alert alert-danger'>Invalid file format. Please select a valid image file.</div>";
+    // Handle the error accordingly
+  } else {
+    // Specify the directory to which the file will be uploaded
+    $upload_dir = "dist/img/";
+
+    // Generate a unique file name
+    $new_file_name = uniqid() . '.' . $file_extension;
+
+    // Move the uploaded file to the desired directory
+    if (move_uploaded_file($file_tmp, $upload_dir . $new_file_name)) {
+      // File uploaded successfully, you can now store the file name in the database
+      // Add the file name to your INSERT query or update the existing query to include the profile_pic column
+      $query = "INSERT INTO f_clients (fname, lname, email, gender, password, c_password, code, date, expires, profile_pic) VALUES (?,?,?,?,?,?,?,?,?,?)";
+    } else {
+      $err = "<div class='alert alert-danger'>Failed to upload the file. Please try again.</div>";
+      // Handle the error accordingly
+    }
+  }
+}
  
   
 }
@@ -136,7 +171,7 @@ if (isset($_POST['create_account'])) {
     echo $success;
     echo $err;
   ?>
-<form method="POST" action="register">
+<form method="POST" action="register" enctype="multipart/form-data">
 <div class="row">
 <div class="col-lg-6">
   <!-- text input -->
@@ -195,6 +230,16 @@ if (isset($_POST['create_account'])) {
 <div class="row mb-3">
   <div class="col-lg-12">
   <div class="form-group form-style">
+      <label for="password_confirm" class="col-form-label text-md-end text-sm">Profile Picture</label>
+      <div class = "input-group">
+      <input type="file" id="profile_pic" name="profile_pic" accept="image/*">
+     </div>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-lg-12">
+  <div class="form-group form-style">
       <label for="password" class="col-form-label text-md-end text-sm">Password</label>
       <div class = "input-group">
           <span class="input-group-text"> <i class="fa fa-unlock-alt" aria-hidden="true"></i></span>
@@ -242,15 +287,15 @@ if (isset($_POST['create_account'])) {
 </div>
 </div>
 </div>
-<footer class="footer bg-white text-lg-start mt-5">
-<!-- Copyright -->
-<div class="p-3">
-<strong>&copy; <a href="https://mglsd.go.ug">FMTAF</a>.</strong>
-<div class="float-right d-none d-sm-inline text-success">
-<b id = "wrapper">FMTAF</b> Version
-</div>
-<!-- Copyright -->
-</footer>
+<!-- <footer class="footer bg-white text-lg-start mt-5">
+  Copyright
+  <div class="p-3">
+  <strong>&copy; <a href="https://mglsd.go.ug">FMTAF</a>.</strong>
+  <div class="float-right d-none d-sm-inline text-success">
+    <b id = "wrapper">FMTAF</b> Version
+  </div>
+  Copyright
+</footer> -->
 
 <script>
 ClassicEditor
