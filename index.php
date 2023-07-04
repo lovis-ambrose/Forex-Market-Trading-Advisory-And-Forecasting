@@ -37,7 +37,7 @@ while ($sys = $res->fetch_object()) {
   <div id="home" class="parallax foo">
     <div class="">
       <nav class = "navbar navbar-expand-md navbar-dark fixed-top pt-0 pb-0 mb-0" id = "navbar_index_login" style ="background-color:#191970;">
-      <a class = "navbar-brand" id = "navbar-brand-index" href="index1.php">
+      <a class = "navbar-brand" id = "navbar-brand-index" href="#">
       <img class="img-fluid img-responsive" src="assets/dist/img/forex7.png" alt="Fleet Management"
       height="" width="40" style ="border-radius:40%;"><span class = "text-white parag">FMTAF</span>
     </a>

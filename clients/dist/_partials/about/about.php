@@ -18,12 +18,12 @@
 <h2 style="text-align:center">Our Team</h2>
 <div class="column">
     <div class="card">
-      <img src="./images/lovis.jpg" alt="Mike" style="width:100%">
+      <img src="./images/file.png" alt="Mike" style="width:100%" height="300px">
       <div class="container">
-        <h2>Mike Ross</h2>
-        <p class="title">Art Director</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>mike@example.com</p>
+        <h2>Dr. Ntanda Moses</h2>
+        <p class="title">Project Supervisor</p>
+        <!-- <p>Guided the development team right from project inception to its end</p> -->
+        <p>moses.ntanda@mak.ac.ug</p>
         <p><button class="button">Contact</button></p>
       </div>
     </div>
@@ -31,12 +31,12 @@
 
   <div class="column">
     <div class="card">
-      <img src="./images/lovis.jpg" alt="Mike" style="width:100%">
+      <img src="./images/mary.png" alt="Mike" style="width:100%" height="300px">
       <div class="container">
-        <h2>Mike Ross</h2>
-        <p class="title">Art Director</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>mike@example.com</p>
+        <h2>Dr. Mary Nsabagwa</h2>
+        <p class="title">Project Supervisor</p>
+        <!-- <p>The overall project supervisor</p> -->
+        <p>mnsabagwa@cit.ac.ug</p>
         <p><button class="button">Contact</button></p>
       </div>
     </div>
@@ -44,12 +44,12 @@
 
   <div class="column">
     <div class="card">
-      <img src="./images/lovis.jpg" alt="Mike" style="width:100%">
+      <img src="./images/lovis.jpg" alt="Mike" style="width:100%" height="300px">
       <div class="container">
-        <h2>Mike Ross</h2>
-        <p class="title">Art Director</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>mike@example.com</p>
+        <h2>Eng. Mutungi Ambrozio</h2>
+        <p class="title">Developer</p>
+        <!-- <p>Some text that describes me lorem ipsum ipsum lorem.</p> -->
+        <p>lovisambrose212@gmail.com</p>
         <p><button class="button">Contact</button></p>
       </div>
     </div>
@@ -57,12 +57,12 @@
 
   <div class="column">
     <div class="card">
-      <img src="./images/lovis.jpg" alt="Mike" style="width:100%">
+      <img src="./images/muhire.jpg" alt="Mike" style="width:100%" height="300px">
       <div class="container">
-        <h2>Mike Ross</h2>
-        <p class="title">Art Director</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>mike@example.com</p>
+        <h2>Eng. Muhire Innocent</h2>
+        <p class="title">Developer</p>
+        <!-- <p>Some text that describes me lorem ipsum ipsum lorem.</p> -->
+        <p>innosta19@gmail.com</p>
         <p><button class="button">Contact</button></p>
       </div>
     </div>
@@ -70,12 +70,12 @@
 
   <div class="column">
     <div class="card">
-      <img src="./images/lovis.jpg" alt="Mike" style="width:100%">
+      <img src="./images/givious.jpeg" alt="Mike" style="width:100%" height="300px">
       <div class="container">
-        <h2>Mike Ross</h2>
-        <p class="title">Art Director</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>mike@example.com</p>
+        <h2>Eng. Musiimennt Givious</h2>
+        <p class="title">Developer</p>
+        <!-- <p>Some text that describes me lorem ipsum ipsum lorem.</p> -->
+        <p>givious98@example.com</p>
         <p><button class="button">Contact</button></p>
       </div>
     </div>
@@ -83,12 +83,12 @@
   
   <div class="column">
     <div class="card">
-      <img src="./images/lovis.jpg" alt="John" style="width:100%">
+      <img src="./images/Edward.jpg" alt="John" style="width:100%" height="300px">
       <div class="container">
-        <h2>John Doe</h2>
-        <p class="title">Designer</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>john@example.com</p>
+        <h2>Eng Kagimu Edward</h2>
+        <p class="title">Developer</p>
+        <!-- <p>Some text that describes me lorem ipsum ipsum lorem.</p> -->
+        <p>kagimuedwardkalungi@gmail.com</p>
         <p><button class="button">Contact</button></p>
       </div>
     </div>

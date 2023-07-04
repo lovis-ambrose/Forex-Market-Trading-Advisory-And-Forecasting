@@ -42,8 +42,18 @@ mysqli_close($conn);
     <title>User Profile</title>
     <!-- styling the pop up -->
     <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+        }
+        
+        html {
+            box-sizing: border-box;
+        }
+        
         .head {
             text-align: center;
+            margin-top: 70px;
         }
 
         .popup {
@@ -74,6 +84,12 @@ mysqli_close($conn);
         }
         .popup .btn {
             margin-left: 50px;
+        }
+        @media screen and (max-width: 650px) {
+            .column {
+            width: 100%;
+            display: block;
+            }
         }
     </style>
 

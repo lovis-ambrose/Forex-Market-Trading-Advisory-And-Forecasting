@@ -7,7 +7,7 @@
   </ul>
 
   <!-- SEARCH FORM -->
-  <form class="form-inline ml-3">
+  <!-- <form class="form-inline ml-3">
     <div class="input-group input-group-sm">
       <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
       <div class="input-group-append">
@@ -16,23 +16,23 @@
         </button>
       </div>
     </div>
-  </form>
+  </form> -->
   
 
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     <!-- Messages Dropdown Menu -->
     <li>
-      <h3 style="color: azure; margin-right: 300px;">FMTAF 4H Forecasts</h3>
+      <h3 style="color: azure; margin-right: 500px;">FMTAF 4H Forecasts</h3>
     </li>
 
     <!-- Notifications  part-->
-    <li class="nav-item dropdown">
+    <!-- <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-bell"></i>
         <span class="badge badge-danger navbar-badge ml-2">32</span>
       </a>
-    </li>
+    </li> -->
 
   </ul>
 </nav>

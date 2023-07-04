@@ -27,7 +27,7 @@ $f_id=$_SESSION['f_id'];
                 <div class="col-md-12">
                   <div class="card">
                     <div class="card-body">
-                       <iframe src="http://localhost:4000/muhirefx" width="100%" height="2250" frameborder="0"></iframe>
+                       <iframe src="http://localhost:4000/muhirefx" width="100%" height="2300" frameborder="0"></iframe>
                     </div>
                   </div><!--forex card-->
                 </div><!---Forex Tcolumn-->

@@ -32,23 +32,21 @@
     .white {
       color: white;
     }
+    h1 {
+      text-align: center;
+    }
     .zoomable-img {
       max-width: 200px;
       max-height: 200px;
       cursor: pointer;
     }
-    .error-message {
-      color: red;
-      font-weight: bold;
-      text-align: center;
-      margin: 10px 0;
-    }
   </style>
   <script src="https://unpkg.com/zooming/build/zooming.min.js"></script>
 </head>
 <body>
+  <h1>FMTAF 4H Forecasts</h1>
   <div>
-    <input style="margin-bottom: 10px; position: sticky;" type="text" id="searchInput" placeholder="Search currency pair">
+    <input style="margin-bottom: 10px;" type="text" id="searchInput" placeholder="Search currency pair">
   </div>
   <table id="forecasts">
     <thead>
@@ -64,46 +62,41 @@
     </thead>
     <tbody id="table-body"></tbody>
   </table>
-  <p class="error-message" id="errorMessage" style="display: none;">No matching results found.</p>
 
   <script>
     const tableBody = document.querySelector('#table-body');
     const searchInput = document.querySelector('#searchInput');
-    const errorMessage = document.querySelector('#errorMessage');
     let data = [];
-    let originalData = [];
 
     searchInput.addEventListener('input', () => {
       const searchTerm = searchInput.value.trim().toLowerCase();
 
-      const filteredData = originalData.filter(pairData => {
+      // Filter the data based on the search term
+      const filteredData = data.filter(pairData => {
         const pair = pairData.pair.toLowerCase();
         return pair.includes(searchTerm);
       });
 
-      if (filteredData.length === 0) {
-        tableBody.innerHTML = '';
-        errorMessage.style.display = 'block';
-      } else {
-        errorMessage.style.display = 'none';
-        updateTable(filteredData);
-      }
+      updateTable(filteredData);
     });
 
     function updateTable(data) {
-      tableBody.innerHTML = '';
+      // Loop through the existing rows and update the data
+      for (let i = 0; i < tableBody.rows.length; i++) {
+        const pairData = data[i];
+        const row = tableBody.rows[i];
 
-      data.forEach(pairData => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${pairData.pair}</td>
-          <td>${pairData.previous_time}</td>
-          <td>${pairData.previous_close}</td>
-          <td>${pairData.predicted_value}</td>
-          <td>${pairData.pips}</td>
-          <td>${pairData.trend}</td>
-          <td><img src="data:image/png;base64,${pairData.chart}" alt="Chart" class="zoomable-img"></td>
-        `;
+        row.cells[0].textContent = pairData.pair;
+        row.cells[1].textContent = pairData.previous_time;
+        row.cells[2].textContent = pairData.previous_close;
+        row.cells[3].textContent = pairData.predicted_value;
+        row.cells[4].textContent = pairData.pips;
+        row.cells[5].textContent = pairData.trend;
+
+        // Remove existing classes
+        row.cells[4].classList.remove('red', 'green', 'white');
+        row.cells[3].classList.remove('red', 'green', 'white');
+        row.cells[5].classList.remove('red', 'green', 'white');
 
         // Apply styling based on values
         if (pairData.pips < 0) {
@@ -128,7 +121,40 @@
           row.cells[5].classList.add('white');
         }
 
-        tableBody.appendChild(row);
+        // Remove existing chart
+        row.cells[6].innerHTML = '';
+
+        // Create new chart element
+        const chartImg = document.createElement('img');
+        chartImg.src = 'data:image/png;base64,' + pairData.chart;
+        chartImg.alt = 'Chart';
+        chartImg.classList.add('zoomable-img'); // Add zoomable-img class
+
+        // Append chart element to the chart column
+        row.cells[6].appendChild(chartImg);
+      }
+
+      // Enable zooming functionality for all chart images
+      const zooming = new Zooming({
+        enableGrab: false, // Disable dragging the zoomed image
+        enableWheel: true // Enable zooming with the mouse wheel
+      });
+      zooming.listen('.zoomable-img');
+    }
+
+    function addNewRows(data) {
+      // Loop through the new data and add new rows
+      data.forEach(pairData => {
+        const row = tableBody.insertRow();
+        row.innerHTML = `
+          <td>${pairData.pair}</td>
+          <td>${pairData.previous_time}</td>
+          <td>${pairData.previous_close}</td>
+          <td>${pairData.predicted_value}</td>
+          <td>${pairData.pips}</td>
+          <td>${pairData.trend}</td>
+          <td><img src="data:image/png;base64,${pairData.chart}" alt="Chart" class="zoomable-img"></td>
+        `;
       });
 
       // Enable zooming functionality for all chart images
@@ -143,20 +169,24 @@
       fetch('http://localhost:4000/test')
         .then(response => response.json())
         .then(responseData => {
-          originalData = responseData;
+          data = responseData; // Update the global data variable
+
+          // Fetch the search term from the input field
           const searchTerm = searchInput.value.trim().toLowerCase();
 
-          const filteredData = originalData.filter(pairData => {
+          // Filter the data based on the search term
+          const filteredData = data.filter(pairData => {
             const pair = pairData.pair.toLowerCase();
             return pair.includes(searchTerm);
           });
 
-          if (filteredData.length === 0) {
-            tableBody.innerHTML = '';
-            errorMessage.style.display = 'block';
-          } else {
-            errorMessage.style.display = 'none';
+          if (tableBody.rows.length === filteredData.length) {
+            // Update the existing rows with the latest data
             updateTable(filteredData);
+          } else {
+            // Remove all existing rows and add new rows with the latest data
+            tableBody.innerHTML = '';
+            addNewRows(filteredData);
           }
         })
         .catch(error => console.error(error));

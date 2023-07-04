@@ -125,7 +125,7 @@ if (!empty($_FILES['profile_pic']['name'])) {
 </head>
 <body class ="bg-light hold-transition sidebar-mini" style="background-image: url('../assets/dist/img/BG/img2.avif');">
   <nav class = "navbar navbar-expand-md navbar-dark fixed-top pt-0 pb-0" id = "navbar_index_login" style ="background-color:#191970;">
-    <a class = "navbar-brand" id = "navbar-brand-index" href="index1.php">
+    <a class = "navbar-brand" id = "navbar-brand-index" href="#">
       <img class="img-fluid img-responsive" src="assets/dist/img/forex7.png" alt="Fleet Management"
       height="" width="40" style ="border-radius:40%;"><span class = "text-white parag">FMTAF</span>
     </a>

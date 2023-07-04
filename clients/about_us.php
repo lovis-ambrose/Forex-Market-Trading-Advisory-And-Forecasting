@@ -27,7 +27,7 @@ $f_id=$_SESSION['f_id'];
                 <div class="col-md-12">
                   <div class="card">
                     <div class="card-body">
-                       <iframe src="../clients/dist/_partials/about/about.php" width="100%" height="2050" frameborder="0"></iframe>
+                       <iframe src="../clients/dist/_partials/about/about.php" width="100%" height="2100" frameborder="0"></iframe>
                     </div>
                   </div><!--forex card-->
                 </div><!---Forex Tcolumn-->
